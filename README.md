@@ -6,15 +6,17 @@
 - ФормРеквесты
 - Ресурсы
 - Фабрики
-- Тесты 
+- Тесты
+
+О ServiceLayers слышал, но пока не доводилось видеть их полезного использования, поэтому тут их нет. 
 
 ### Запуск
 
 ```bash
-composer install
 cp .env.example .env # Как БД используется SQLite
+composer install
 php artisan key:generate
-php artisan migrate --seed
+php artisan migrate:fresh
 php artisan test
 ```
 
