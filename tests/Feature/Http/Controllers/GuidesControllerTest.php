@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Feature\Http\Controllers;
 
 use App\Models\Guide;
 use Tests\TestCase;
@@ -14,7 +14,7 @@ class GuidesControllerTest extends TestCase
         $inactiveGuides = $guides->filter(fn (Guide $guide) => !$guide->is_active);
 
         $response = $this->getJson(route('guides.list'))
-            ->assertSuccessful()
+            ->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
                     '*' => [

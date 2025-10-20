@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Query\HuntingBookingQuery;
 use Database\Factories\HuntingBookingFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +22,9 @@ use Illuminate\Support\Carbon;
  * @property Guide $guide
  *
  * @method static HuntingBookingFactory factory($count = null, $state = [])
+ * @method static HuntingBookingQuery|HuntingBooking query()
+ *
+ * @mixin HuntingBookingQuery
  */
 class HuntingBooking extends Model
 {
@@ -30,6 +34,14 @@ class HuntingBooking extends Model
 
     protected $casts = [
         'date' => 'date',
+    ];
+
+    protected $fillable = [
+        'tour_name',
+        'hunter_name',
+        'date',
+        'guide_id',
+        'participants_count',
     ];
 
     // Relations
@@ -45,5 +57,12 @@ class HuntingBooking extends Model
     {
         // Для чистоты даты в БД (чтобы не было часов/минут/секунд)
         $this->attributes['date'] = $date->startOfDay();
+    }
+
+    // Misc
+
+    function newEloquentBuilder($query): HuntingBookingQuery
+    {
+        return new HuntingBookingQuery($query);
     }
 }
