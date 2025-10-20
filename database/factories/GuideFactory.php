@@ -16,4 +16,9 @@ class GuideFactory extends Factory
             'is_active' => !!rand(0, 1),
         ];
     }
+
+    function active(bool $isActive = true): self
+    {
+        return $this->state(['is_active' => $isActive]);
+    }
 }

@@ -35,6 +35,12 @@ class Guide extends Model
         'is_active' => 'boolean',
     ];
 
+    protected $fillable = [
+        'name',
+        'experience_years',
+        'is_active',
+    ];
+
     // Relations
 
     function bookings(): HasMany

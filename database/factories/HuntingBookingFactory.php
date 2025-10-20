@@ -16,12 +16,7 @@ class HuntingBookingFactory extends Factory
             'hunter_name' => fake()->name(),
             'guide_id' => Guide::factory(),
             'date' => now()->addDays(rand(1, 365)),
-            'participants_count' => 0,
+            'participants_count' => rand(1, HuntingBooking::MAX_PARTICIPANTS_COUNT),
         ];
-    }
-
-    function withParticipants(int $count): self
-    {
-        return $this->state(['participants_count' => $count]);
     }
 }
