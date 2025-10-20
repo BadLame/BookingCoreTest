@@ -32,4 +32,24 @@ class GuidesControllerTest extends TestCase
             $response->assertJsonMissing(['id' => $guide->id]);
         }
     }
+
+    function testGuidesListExperienceFiltration(): void
+    {
+        $guides = [];
+        $minYears = rand(5, 10);
+
+        foreach (range(1, 10) as $experience_years) {
+            $guides[] = Guide::factory()->active()->create(['experience_years' => $experience_years]);
+        }
+
+        $response = $this->getJson(
+            route('guides.list', ['min_experience' => $minYears])
+        );
+
+        foreach ($guides as $guide) if ($guide->experience_years < $minYears) {
+            $response->assertJsonMissing(['id' => $guide->id]);
+        } else {
+            $response->assertJsonFragment(['id' => $guide->id]);
+        }
+    }
 }
