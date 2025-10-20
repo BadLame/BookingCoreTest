@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Query\GuideQuery;
 use Database\Factories\GuideFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,9 @@ use Illuminate\Support\Carbon;
  * @property Carbon $updated_at
  *
  * @method static GuideFactory factory($count = null, $state = [])
+ * @method static Guide|GuideQuery query()
+ *
+ * @mixin GuideQuery
  */
 class Guide extends Model
 {
@@ -26,4 +30,11 @@ class Guide extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    // Misc
+
+    function newEloquentBuilder($query): GuideQuery
+    {
+        return new GuideQuery($query);
+    }
 }
